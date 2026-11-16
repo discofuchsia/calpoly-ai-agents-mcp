@@ -1,0 +1,15 @@
+# Secrets
+.env
+.env.*
+
+# Dependencies / environments
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+
+# Agent working files (plans, reviews)
+.agents/
