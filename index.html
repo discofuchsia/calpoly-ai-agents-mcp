@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Day in the Life of an AI Engineer: AI Agents and MCP</title>
+  <meta name="description" content="Talk by Jules Gerard, Senior AI Engineer at Qvest/Amazon, for Cal Poly Entrepreneurs.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="deck.css">
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+  <div class="stage-wrap" id="stage-wrap">
+    <main class="stage" id="stage">
+
+      <section class="slide slide-title" data-title="Title" data-minutes="1">
+        <div class="glow" aria-hidden="true"></div>
+        <p class="kicker">Cal Poly Entrepreneurs</p>
+        <h1>A Day in the Life of an <span class="grad">AI Engineer</span></h1>
+        <p class="subtitle">AI Agents and MCP</p>
+        <p class="byline"><strong>Jules Gerard</strong> · Senior AI Engineer at Qvest/Amazon</p>
+        <aside class="notes">Hi everyone, thanks for having me. In the next 30 minutes I'll show you what my day actually looks like, what an AI agent is, what MCP is and why it matters, and then a live demo: an agent that critiques a startup idea. Then the next 30 minutes are yours for questions.</aside>
+      </section>
+
+      <section class="slide" data-title="Hi, I'm Jules" data-minutes="1">
+        <p class="kicker">About me</p>
+        <h2>Hi, I'm Jules</h2>
+        <p class="lead">Senior AI Engineer at <span class="grad">Qvest/Amazon</span></p>
+        <ul class="bullets">
+          <li data-step="1">I build AI agents: models that use tools to get real work done</li>
+          <li data-step="2">I turn fuzzy, judgment-heavy work into systems a model can help with</li>
+          <li data-step="3">Today: the parts of the job I wish someone had shown me in school</li>
+        </ul>
+        <aside class="notes">Quick intro. I'm a Senior AI Engineer at Qvest/Amazon. My job is building AI agents. Keep this short and personal: one sentence on how you got into AI engineering. Then: today is the talk I wish I had heard as a student.</aside>
+      </section>
+
+      <section class="slide" data-title="A day in the life" data-minutes="2">
+        <p class="kicker">A day in the life · Project Sentinel</p>
+        <h2>What the job actually looks like</h2>
+        <ol class="timeline">
+          <li data-step="1"><span class="when">Overnight</span><strong>The pipeline runs</strong><span>The agent works through the day's new reviews</span></li>
+          <li data-step="2"><span class="when">Morning</span><strong>Read the traces</strong><span>What did the agent do, and why?</span></li>
+          <li data-step="3"><span class="when">Midday</span><strong>Read the feedback</strong><span>Where reviewers agreed, and where they pushed back</span></li>
+          <li data-step="4"><span class="when">Afternoon</span><strong>Build and evaluate</strong><span>A better prompt, a new MCP tool, then rerun the test set</span></li>
+          <li data-step="5"><span class="when">Evening</span><strong>Ship for tonight</strong><span>Small changes, ready for the next run</span></li>
+        </ol>
+        <aside class="notes">This is a real day, anonymized. Project Sentinel is a codename for an agent I work on for a security review team at a large tech company. A pipeline runs it overnight. My morning is reading what it did. Midday is the reviewers' feedback. The afternoon is turning that feedback into changes and testing them before the next run. The surprise for most people: very little of the day is "talking to the model". An AI engineer is a software engineer whose code includes a model.</aside>
+      </section>
+
+      <section class="slide" data-title="Case study: Project Sentinel" data-minutes="2">
+        <p class="kicker">Case study · Project Sentinel <span class="hint">codename, anonymized</span></p>
+        <h2 class="case-title">We build AI agents that help review teams score <span class="grad">content-security risk</span>.</h2>
+        <div class="flow">
+          <div class="flow-box" data-step="1"><span class="flow-tag">MCP servers</span><strong>Connect</strong><span>the agent to the team's data tools</span></div>
+          <div class="flow-arrow" data-step="2" aria-hidden="true">→</div>
+          <div class="flow-split" data-step="2">
+            <div class="flow-box"><span class="flow-tag">Formulas</span><strong>Score</strong><span>the deterministic parts</span></div>
+            <div class="flow-box accent"><span class="flow-tag">Agent</span><strong>Interpret</strong><span>contradicting answers, process maturity, the narrative</span></div>
+          </div>
+          <div class="flow-arrow" data-step="3" aria-hidden="true">→</div>
+          <div class="flow-box" data-step="3"><span class="flow-tag">Humans</span><strong>Review</strong><span>their feedback improves the next run</span></div>
+        </div>
+        <p class="flow-foot" data-step="4">↻ runs as a nightly pipeline</p>
+        <aside class="notes">Here's the case study, anonymized. Project Sentinel is a codename. It's an agent that helps a security review team at a large tech company triage third-party risk. The key design choice: formulas handle anything that can be scored deterministically; the agent only does the interpretive parts, like spotting answers that contradict each other, judging how mature a process is, and writing the narrative. MCP servers connect it to the team's data tools. Humans review the results, and their feedback improves the next run. It runs nightly. Hold this shape: the demo later works the same way.</aside>
+      </section>
+
+      <section class="slide" data-title="From chatbots to agents" data-minutes="1.5">
+        <p class="kicker">The shift</p>
+        <h2>From chatbots to agents</h2>
+        <div class="versus">
+          <div class="vs-col">
+            <h3>Chatbot <span class="tag">answers</span></h3>
+            <ul class="bullets small">
+              <li>You ask, it replies</li>
+              <li>Knows what it was trained on</li>
+              <li>You do the work</li>
+            </ul>
+          </div>
+          <div class="vs-arrow" aria-hidden="true">→</div>
+          <div class="vs-col accent" data-step="1">
+            <h3>Agent <span class="tag">acts</span></h3>
+            <ul class="bullets small">
+              <li>You give it a goal</li>
+              <li>It calls tools to look things up and do things</li>
+              <li>It loops until the job is done, or asks you</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">A chatbot answers. An agent acts. The difference is tools and a loop: the model can decide to call a function, see the result, and keep going until the goal is met.</aside>
+      </section>
+
+      <section class="slide" data-title="What is an agent" data-minutes="1.5">
+        <p class="kicker">Definition</p>
+        <h2>What is an agent?</h2>
+        <div class="equation">
+          <div class="term" data-step="1"><strong>Model</strong><span>decides what to do next</span></div>
+          <div class="op" data-step="2">+</div>
+          <div class="term" data-step="2"><strong>Tools</strong><span>functions it can call</span></div>
+          <div class="op" data-step="3">+</div>
+          <div class="term" data-step="3"><strong>Loop</strong><span>call, observe, repeat</span></div>
+          <div class="op" data-step="4">+</div>
+          <div class="term" data-step="4"><strong>Context</strong><span>goal, history, data</span></div>
+        </div>
+        <p class="lead center" data-step="5">= an <span class="grad">agent</span></p>
+        <aside class="notes">My working definition: model plus tools plus a loop plus context. The model picks the next step, tools let it act, the loop lets it react to results, and context is everything it knows about the task. Remove any one and it stops being an agent.</aside>
+      </section>
+
+      <section class="slide" data-title="The tool-calling loop" data-minutes="2">
+        <p class="kicker">How it works</p>
+        <h2>The tool-calling loop</h2>
+        <div class="loop">
+          <div class="node" data-step="1"><span class="num">1</span><strong>Goal + context</strong><span>sent to the model</span></div>
+          <div class="node" data-step="2"><span class="num">2</span><strong>Model decides</strong><span>answer, or call a tool</span></div>
+          <div class="node" data-step="3"><span class="num">3</span><strong>Host runs the tool</strong><span>your code, your rules</span></div>
+          <div class="node" data-step="4"><span class="num">4</span><strong>Result goes back</strong><span>into the context</span></div>
+          <div class="loop-back" data-step="5" aria-hidden="true"><span>repeat until done</span></div>
+        </div>
+        <p class="lead center" data-step="6">The model never runs code. <span class="grad">It asks.</span></p>
+        <aside class="notes">Walk the loop one step at a time. Key point on step 3: the model only produces a request to call a tool with some arguments. Your program decides whether to run it. That is where safety and control live. Then the result goes back into the conversation and the model decides again.</aside>
+      </section>
+
+      <section class="slide" data-title="The integration problem" data-minutes="1">
+        <p class="kicker">The problem</p>
+        <h2>Every app wired to every tool</h2>
+        <div class="formula-row">
+          <div class="formula bad" data-step="1"><span class="f">N × M</span><span>custom integrations: every AI app builds its own connector to every tool</span></div>
+          <div class="formula good" data-step="2"><span class="f">N + M</span><span>with one shared protocol: build a tool once, use it from any app</span></div>
+        </div>
+        <aside class="notes">Before a standard, every AI app had to write its own connector for every tool or data source. That is N times M pieces of glue code. A shared protocol turns it into N plus M: each app speaks the protocol once, each tool speaks it once.</aside>
+      </section>
+
+      <section class="slide" data-title="MCP" data-minutes="2">
+        <p class="kicker">Model Context Protocol</p>
+        <h2>MCP: an open protocol</h2>
+        <p class="lead">A standard way for AI apps to connect to tools and data. Introduced by Anthropic in November 2024.</p>
+        <div class="arch">
+          <div class="arch-box host" data-step="1">
+            <h3>Host</h3><p>The AI app: an IDE, a chat app, an agent</p>
+            <div class="arch-clients">
+              <div class="arch-box client" data-step="2"><h3>Client</h3><p>one per server</p></div>
+              <div class="arch-box client" data-step="2"><h3>Client</h3><p>one per server</p></div>
+            </div>
+          </div>
+          <div class="arch-links" data-step="3" aria-hidden="true"><span></span><span></span></div>
+          <div class="arch-servers" data-step="3">
+            <div class="arch-box server"><h3>Server</h3><p>exposes tools and data</p></div>
+            <div class="arch-box server"><h3>Server</h3><p>exposes tools and data</p></div>
+          </div>
+        </div>
+        <aside class="notes">MCP, the Model Context Protocol, is an open protocol introduced by Anthropic in November 2024. Three roles: the host is the app you use. Inside it, a client holds one connection to one server. A server exposes capabilities. You write a server once and any MCP host can use it.</aside>
+      </section>
+
+      <section class="slide" data-title="Primitives" data-minutes="2">
+        <p class="kicker">What travels over MCP</p>
+        <h2>The primitives</h2>
+        <div class="prims">
+          <div class="prim-col">
+            <h3>Servers offer</h3>
+            <div class="prim" data-step="1"><strong>Tools</strong><span>functions the model can call</span></div>
+            <div class="prim" data-step="2"><strong>Resources</strong><span>data the app can read</span></div>
+            <div class="prim" data-step="3"><strong>Prompts</strong><span>reusable templates</span></div>
+          </div>
+          <div class="prim-col alt">
+            <h3>Clients offer</h3>
+            <div class="prim" data-step="4"><strong>Sampling</strong><span>a server asks the host's model for a completion</span></div>
+            <div class="prim" data-step="5"><strong>Roots</strong><span>which files and folders a server may work in</span></div>
+            <div class="prim" data-step="6"><strong>Elicitation</strong><span>a server asks the user for more input</span></div>
+          </div>
+        </div>
+        <aside class="notes">Servers offer three things: tools the model can call, resources the app can read, and prompts, which are reusable templates. Clients offer things back: sampling lets a server ask for a model completion through the host, roots tell a server where it may work, and elicitation lets a server ask the user a question. Today's demo uses tools and one resource.</aside>
+      </section>
+
+      <section class="slide" data-title="Under the hood" data-minutes="2">
+        <p class="kicker">Under the hood</p>
+        <h2>It's just JSON-RPC 2.0</h2>
+        <div class="code-grid">
+          <div class="code-card" data-step="1">
+            <p class="code-label">→ request</p>
+<pre><code>{ "jsonrpc": "2.0", "id": 1,
+  "method": "tools/list" }</code></pre>
+            <p class="code-label">← response (trimmed)</p>
+<pre><code>{ "tools": [{
+    "name": "size_market",
+    "title": "Size the market",
+    "inputSchema": { "type": "object",
+      "properties": {
+        "customer_count": { "type": "integer" },
+        "annual_price_usd": { "type": "number" }
+      } } }, … ] }</code></pre>
+          </div>
+          <div class="code-card" data-step="2">
+            <p class="code-label">→ request</p>
+<pre><code>{ "jsonrpc": "2.0", "id": 2,
+  "method": "tools/call",
+  "params": { "name": "size_market",
+    "arguments": {
+      "segment": "US college students",
+      "customer_count": 1000,
+      "annual_price_usd": 60,
+      "serviceable_share": 0.2,
+      "obtainable_share": 0.05 } } }</code></pre>
+            <p class="code-label">← response (trimmed)</p>
+<pre><code>{ "structuredContent": {
+    "tam_usd": 60000, "sam_usd": 12000,
+    "som_usd": 600 } }</code></pre>
+          </div>
+        </div>
+        <aside class="notes">No magic. These are real messages from the server in today's demo, trimmed. tools/list returns each tool's name, description and a JSON Schema for its input. tools/call sends arguments and gets a structured result back. The numbers here are toy inputs to show the format, not real market data.</aside>
+      </section>
+
+      <section class="slide" data-title="Transports and trust" data-minutes="1.5">
+        <p class="kicker">Transports and trust</p>
+        <h2>Where it runs, who it trusts</h2>
+        <div class="versus tight">
+          <div class="vs-col">
+            <h3>stdio</h3>
+            <p class="small">Server runs as a local child process. No network port at all.</p>
+          </div>
+          <div class="vs-col">
+            <h3>Streamable HTTP</h3>
+            <p class="small">Server runs remotely over HTTP. Needs real authentication and HTTPS.</p>
+          </div>
+        </div>
+        <ul class="checks">
+          <li data-step="1">Local only: our demo listens on 127.0.0.1</li>
+          <li data-step="2">API keys live in environment variables, never in code or the browser</li>
+          <li data-step="3">Least privilege: each tool does one narrow thing</li>
+          <li data-step="4">Tool output is data, not instructions</li>
+        </ul>
+        <aside class="notes">Two transports. stdio: the host starts the server as a child process and talks over standard input and output, so nothing listens on the network. Streamable HTTP: for remote servers, which then need proper authentication. The trust rules I follow every day are on screen. The last one matters most: anything a tool returns could contain text that tries to steer the model, so treat it as data.</aside>
+      </section>
+
+      <section class="slide" data-title="Meet the agent" data-minutes="1">
+        <p class="kicker">Demo setup</p>
+        <h2>Meet the Startup Co-founder Agent</h2>
+        <p class="lead">Give it an idea. It works through four tools and one resource on a local MCP server. <span class="muted">Same shape as Project Sentinel: a rubric, tools that compute, a model that judges.</span></p>
+        <div class="tools-grid">
+          <div class="tool" data-step="1"><code>playbook://pitch-rubric</code><span>resource: how pitches are scored</span></div>
+          <div class="tool" data-step="2"><code>size_market</code><span>TAM, SAM, SOM from stated assumptions</span></div>
+          <div class="tool" data-step="2"><code>scan_competitors</code><span>alternatives, threat, white space</span></div>
+          <div class="tool" data-step="2"><code>draft_landing_page</code><span>a real page, sandboxed</span></div>
+          <div class="tool" data-step="2"><code>score_pitch</code><span>weighted score, top risk, next step</span></div>
+        </div>
+        <aside class="notes">Here's the demo. The agent reads the pitch rubric resource first, then calls four tools in order: size the market, scan competitors, draft a landing page, score the pitch. The tools only compute from the assumptions the model gives them, so every number is labeled as an assumption, not research. Ask the room for an idea now, or use the sample.</aside>
+      </section>
+
+      <section class="slide slide-demo" data-title="Live demo" data-minutes="5">
+        <div class="demo-head">
+          <p class="kicker"><span class="live-dot" aria-hidden="true"></span>Live demo · Startup Co-founder Agent</p>
+          <p class="demo-chips"><span>LLM</span><span>MCP client</span><span>MCP server · stdio</span><span>4 tools · 1 resource</span></p>
+        </div>
+        <iframe class="demo-frame" src="demo/index.html" title="Live demo"></iframe>
+        <aside class="notes">Click into the input, type the audience's idea, press Run agent. Narrate the timeline on the left: rubric read, then each tool call with its JSON input, then the result card on the right. If Wi-Fi or the API fails, click "Switch to replay" or press M, then Run. The arrow keys and the clicker still move the deck while the demo has focus, except while typing in the input.</aside>
+      </section>
+
+      <section class="slide" data-title="What just happened" data-minutes="1">
+        <p class="kicker">Recap</p>
+        <h2>What just happened</h2>
+        <ol class="steps-list">
+          <li data-step="1">The agent <strong>read a resource</strong>: the pitch rubric</li>
+          <li data-step="2">It made <strong>four tool calls</strong>, each with JSON in and JSON out</li>
+          <li data-step="3">It <strong>wrote a verdict</strong> from the results</li>
+        </ol>
+        <p class="lead" data-step="4">The model never saw our code. It saw <span class="grad">names, descriptions and schemas</span>.</p>
+        <aside class="notes">Same loop as before, now concrete. One resource read, four tool calls, one final answer. The model only knew what the MCP server told it: tool names, descriptions and input schemas. That is why good tool design is most of the job.</aside>
+      </section>
+
+      <section class="slide" data-title="Lessons from the job" data-minutes="1.5">
+        <p class="kicker">Lessons from the job</p>
+        <h2>What actually makes agents work</h2>
+        <div class="cards two">
+          <div class="card" data-step="1"><h3>Evals</h3><p>Keep a test set of real cases. Without it you're guessing.</p></div>
+          <div class="card" data-step="2"><h3>Guardrails</h3><p>Formulas for math, the model for judgment. Validate every tool input.</p></div>
+          <div class="card" data-step="3"><h3>Humans in the loop</h3><p>Show the reasons, not just the score, so people can check the work.</p></div>
+          <div class="card" data-step="4"><h3>Cost and latency</h3><p>Every loop step is a model call. Fewer, better tools win.</p></div>
+        </div>
+        <aside class="notes">Four lessons. Evals: the most important habit; keep real examples and rerun them on every change. Guardrails: on Project Sentinel, anything that can be computed is a formula, not a model call, and every tool input has a schema. Humans in the loop: reviewers check the results, and their feedback shapes the next run. Cost and latency: each step of the loop costs time and money, so design tools that do a meaningful chunk of work.</aside>
+      </section>
+
+      <section class="slide" data-title="Build this Monday" data-minutes="1">
+        <p class="kicker">Your turn</p>
+        <h2>What you could build Monday</h2>
+        <div class="monday">
+          <ul class="bullets small">
+            <li data-step="1">An MCP server for your club's events and sign-ups</li>
+            <li data-step="2">A customer-discovery helper that tags interview notes</li>
+            <li data-step="3">A study agent over your own course notes</li>
+          </ul>
+          <div class="recipe" data-step="4">
+            <h3>Starter recipe</h3>
+<pre><code>npm i @modelcontextprotocol/sdk zod
+# write ONE tool with a schema
+npx @modelcontextprotocol/inspector \
+  node server.mjs</code></pre>
+          </div>
+        </div>
+        <aside class="notes">You can build one of these this week. Start with a single tool with a clear schema. Test it in the MCP Inspector before you connect any model. Then plug it into an MCP host. Docs are at modelcontextprotocol.io.</aside>
+      </section>
+
+      <section class="slide slide-thanks" data-title="Thank you" data-minutes="0.5">
+        <div class="thanks">
+          <div>
+            <p class="kicker">Thank you</p>
+            <h2>Let's build agents.</h2>
+            <p class="lead"><strong>Jules Gerard</strong><br>Senior AI Engineer at Qvest/Amazon</p>
+            <p class="contact"><a href="https://github.com/discofuchsia" target="_blank" rel="noopener noreferrer">github.com/discofuchsia</a></p>
+          </div>
+          <img class="qr" src="assets/qr.svg" alt="QR code to github.com/discofuchsia" width="420" height="420">
+        </div>
+        <aside class="notes">Thank you. Scan the QR code to find me on GitHub. I'd love to keep the conversation going, whether it's about agents, MCP, or what it's like to work as an AI engineer.</aside>
+      </section>
+
+      <section class="slide slide-title" data-title="Q&amp;A" data-minutes="0.5">
+        <div class="glow" aria-hidden="true"></div>
+        <p class="kicker">Q&amp;A</p>
+        <h1>Questions?</h1>
+        <p class="subtitle">Agents, MCP, the job, getting started</p>
+        <aside class="notes">Open the floor. Good prompts if it's quiet: what does an AI engineer interview look like, what to learn first, how to tell if an agent is actually working. Keep the QR slide one key press back.</aside>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="blackout" id="blackout" hidden></div>
+
+  <div class="overlay" id="help" hidden role="dialog" aria-label="Keyboard shortcuts">
+    <div class="overlay-panel">
+      <h2>Keyboard shortcuts</h2>
+      <dl class="keys">
+        <dt>→ Space PageDown ↓</dt><dd>Next build or slide</dd>
+        <dt>← PageUp ↑</dt><dd>Previous</dd>
+        <dt>Home / End</dt><dd>First / last slide</dd>
+        <dt>D</dt><dd>Jump to the demo</dd>
+        <dt>P</dt><dd>Presenter view</dd>
+        <dt>G</dt><dd>Slide overview</dd>
+        <dt>F</dt><dd>Fullscreen</dd>
+        <dt>B</dt><dd>Black screen</dd>
+        <dt>?</dt><dd>This help</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="overlay overview" id="overview" hidden role="dialog" aria-label="Slide overview">
+    <div class="overview-grid" id="overview-grid"></div>
+  </div>
+
+  <div class="presenter-root" id="presenter-root" hidden>
+    <div class="pv-main">
+      <div class="pv-head">
+        <span class="pv-label">Now</span>
+        <span class="pv-pos" id="pv-pos"></span>
+      </div>
+      <div class="pv-frame" id="pv-current"></div>
+    </div>
+    <div class="pv-side">
+      <div class="pv-clockrow">
+        <div class="pv-timer-box">
+          <span class="pv-timer" id="pv-timer">00:00</span><span class="pv-target">/ 30:00</span>
+          <span class="pv-timer-state" id="pv-timer-state">press → to start · T pause · R reset</span>
+        </div>
+        <div class="pv-meta">
+          <span class="pv-pace" id="pv-pace">on time</span>
+          <span class="pv-clock" id="pv-clock"></span>
+        </div>
+      </div>
+      <div class="pv-head"><span class="pv-label">Next</span><span class="pv-next-title" id="pv-next-title"></span></div>
+      <div class="pv-frame small" id="pv-next"></div>
+      <div class="pv-notes" id="pv-notes"></div>
+    </div>
+  </div>
+
+  <script src="deck.js"></script>
+</body>
+</html>
