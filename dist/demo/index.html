@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startup Co-founder Agent | MCP demo</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>Startup Co-founder Agent</h1>
+          <p class="sub">An AI agent using 4 tools and 1 resource from an MCP server</p>
+        </div>
+      </div>
+      <div class="controls">
+        <span class="badge" id="provider-badge" title="LLM provider">replay</span>
+        <div class="switch" role="radiogroup" aria-label="Demo mode">
+          <button type="button" role="radio" id="mode-live" data-mode="live" aria-checked="false" disabled>Live</button>
+          <button type="button" role="radio" id="mode-replay" data-mode="replay" aria-checked="true">Replay</button>
+        </div>
+      </div>
+    </header>
+
+    <form class="prompt" id="prompt-form" autocomplete="off">
+      <label class="visually-hidden" for="idea">Startup idea</label>
+      <input id="idea" name="idea" type="text" maxlength="500" placeholder="Describe a startup idea…">
+      <button type="submit" id="run-btn" class="run-btn">
+        <span class="run-label">Run agent</span>
+      </button>
+    </form>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <main class="columns">
+      <section class="column timeline-col" aria-label="Agent timeline">
+        <h2 class="col-title">Agent timeline <span class="step-count" id="step-count"></span></h2>
+        <ol class="timeline" id="timeline"></ol>
+      </section>
+      <section class="column artifacts-col" aria-label="Artifacts">
+        <h2 class="col-title">Artifacts</h2>
+        <div class="artifacts" id="artifacts">
+          <p class="empty" id="artifacts-empty">Tool results will appear here as the agent works.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="dial-template">
+    <svg viewBox="0 0 150 150" aria-hidden="true">
+      <defs>
+        <linearGradient id="dial-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7c5cff"></stop>
+          <stop offset="100%" stop-color="#00d4ff"></stop>
+        </linearGradient>
+      </defs>
+      <circle class="track" cx="75" cy="75" r="64" fill="none" stroke-width="12"></circle>
+      <circle class="value" cx="75" cy="75" r="64" fill="none" stroke-width="12"></circle>
+    </svg>
+  </template>
+
+  <script src="replays/sample.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
